@@ -1,0 +1,37 @@
+def make_elements_distinct(A):
+    unique_values = set()
+    operations = 0
+
+    for i in range(len(A)):
+        number = A[i]
+        if number in unique_values:
+            original_number = number
+            decrement_cost = 0
+            increment_cost = 0
+            decrement_number = number
+            increment_number = number
+            while decrement_number in unique_values:
+                decrement_number -= 1
+                decrement_cost += 1
+            while increment_number in unique_values:
+                increment_number += 1
+                increment_cost += 1
+
+            if decrement_cost <= increment_cost:
+                operations += decrement_cost
+                unique_values.add(decrement_number)
+                A[i] = decrement_number
+            else:
+                operations += increment_cost
+                unique_values.add(increment_number)
+                A[i] = increment_number
+        else:
+            unique_values.add(number)
+
+    return operations
+
+N = int(input())
+A = list(map(int, input().split()))
+
+result = make_elements_distinct(A)
+print(result)
